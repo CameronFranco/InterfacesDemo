@@ -2,27 +2,118 @@
 
 namespace InterfacesDemo
 {
-    class Program
+    public class Monster : IEquatable<Monster>
     {
-        static void Main(string[] args)
+        public double Health;
+        public double Armor;
+        public int Level;
+        public string Name;
+        public float attackDamage;
+        public Monster(string name, double level)
         {
-            Console.WriteLine("Testing Cars");
-            Car zCar = new Car("Datsun", "280Z", "1978");
-            Car vette = new Car("Chevrolet", "Corvette", "2019");
-            Car zCar2 = new Car("Datsun", "280Z", "1978");
+            this.Name = name;
+            this.Level = level;
+        }
 
-            Console.WriteLine($"{zCar.ToString()} is not equal to a {vette.ToString()}: " + zCar.Equals(vette));
-            Console.WriteLine($"{zCar.ToString()} is equal to a {zCar2.ToString()}: " + zCar.Equals(zCar2));
+        public bool Equals(Monster other)
+        {
+            return this.Level == other.Level;
+        }
 
-            Console.WriteLine("\n");
-
-            Console.WriteLine("Testing Monsters");
-            Monster sully = new Monster("Sully", 17);
-            Monster mike = new Monster("Mike Wizowski", 15);
-            Monster randall = new Monster("Randall", 17);
-
-            Console.WriteLine($"{sully} is not equal to {mike}: " + sully.Equals(mike));
-            Console.WriteLine($"{sully} is equal to {randall}: " + sully.Equals(randall));
+        override public string ToString()
+        {
+            return this.Name;
         }
     }
+
+    interface IAttacker<T>
+    {
+        public int Attack(double attackdamage)
+        {
+        }
+
+        public void TakeDamage(double damage)
+        {
+        }
+      /*  public void Battle(obj Attacker, obj Defender)
+        {
+            int damageDealt = Attack(Attacker);
+            TakeDamage(damageDealt, Defender);
+            damageDealt = Attack(Defender);
+            TakeDamage(damageDealt, Attacker);
+        }*/
+    }
+    public class Elf : Monster, IAttacker<Elf>, IEquatable<Elf>
+    {
+        public Elf(string name, double level)
+        {          
+            this.Health = 0.8 * level;
+            this.Armor = 3;
+            this.attackDamage = 10;
+        }
+        public double Attack(double enemyarmor)
+        {
+            return this.attackDamage * this.level / enemyarmor;
+        }
+        public void TakeDamage( double damage)
+        {
+            this.Health = this.Health -  damage / this.Armor;
+        }
+    }
+
+    public class Orc : Monster, IAttacker<Orc>, IEquatable<Orc>
+    {
+        public Orc(string name, double level)
+        {
+            this.Health = 1.5 * level;
+            this.Armor = 7;
+            this.attackDamage = 5;
+        }
+        public double Attack(double enemyArmor)
+        {
+            return this.attackDamage * this.level / enemyArmor;
+        }
+        public void TakeDamage(double damage)
+        {
+            this.Health = this.Health - damage / this.Armor;
+        }
+    }
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Elf Glorfindel = new Elf("Glorfindel", 500 );
+            Orc Scout = new Orc("Orc Scout", 100 );
+            Console.WriteLine("The Orc's Health:" + Orc.Health.ToString());
+            Console.WriteLine("The Elf's Health:" + Elf.Health.ToString());
+
+            while( Glorfindel.Health && Scout.Health > 0)
+            {
+                double scoutDamage = Glorfindel.Attack(Scout.Armor);
+                double GlorfindelDamage = Scout.Attack(Glorfindel.Armor);
+                Glorfindel.TakeDamage(GlorfindelDamage);
+                Scout.TakeDamage(scoutDamage);
+                Console.WriteLine("The Orc's Health:" + Orc.Health.ToString());
+                Console.WriteLine("The Elf's Health:" + Elf.Health.ToString());
+            }
+
+            if (Orc.Health < 0)
+            {
+                Console.WriteLine("The Elf wins!");
+            }
+
+            else if (Elf.Health < 0)
+            {
+                Console.WriteLine("The Orc wins!");
+            }
+            else
+            {
+                Console.WriteLine("error");
+            }
+        }
+
+    }
+
+
 }
