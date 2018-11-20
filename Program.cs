@@ -14,11 +14,11 @@ namespace InterfacesDemo
         {          
             this.Health = 0.8 * level;
             this.Armor = 80;
-            this.attackDamage = 8;
+            this.attackDamage = 10;
         }
         public double Attack(double enemyArmor)
         {
-            Console.WriteLine("Elf" + (this.attackDamage * base.Level / enemyArmor).ToString());
+            //.WriteLine("Elf " + (this.attackDamage * base.Level / enemyArmor).ToString());
             return this.attackDamage * base.Level / enemyArmor;
         }
         public void TakeDamage( double damage)
@@ -37,8 +37,7 @@ namespace InterfacesDemo
         }
         public double Attack(double enemyArmor)
         {
-            double damage = this.attackDamage * base.Level / enemyArmor;
-            Console.WriteLine("Orc" + damage.ToString());
+            //Console.WriteLine("Orc " + (this.attackDamage * base.Level / enemyArmor).ToString());
             return this.attackDamage * base.Level / enemyArmor;
         }
         public void TakeDamage(double damage)
