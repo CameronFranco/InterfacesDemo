@@ -12,8 +12,8 @@ namespace InterfacesDemo
     {
         public Elf(string name, double level): base(name, level)
         {          
-            this.Health = 0.8 * level;
-            this.Armor = 8;
+            this.Health = 8 * level;
+            this.Armor = 80;
             this.attackDamage = 10;
         }
         public double Attack(double enemyArmor)
@@ -31,8 +31,8 @@ namespace InterfacesDemo
     {
         public Orc(string name, double level) : base(name, level)
         {
-            this.Health = 4 * level;
-            this.Armor = 4;
+            this.Health = 40 * level;
+            this.Armor = 40;
             this.attackDamage = 4;
         }
         public double Attack(double enemyArmor)
@@ -50,7 +50,7 @@ namespace InterfacesDemo
 
         static void Main(string[] args)
         {
-            Elf Glorfindel = new Elf("Glorfindel", 10);
+            Elf Glorfindel = new Elf("Glorfindel", 20);
             Orc Captain = new Orc("Orc Captain", 10);
             Console.WriteLine(Captain.Name + "'s Health:" + Captain.Health.ToString());
             Console.WriteLine(Glorfindel.Name + "'s Health:" + Glorfindel.Health.ToString());
